@@ -19,3 +19,8 @@ name = "rg-qa-01"
 location = "eastus"
   
 }
+resource "azurerm_resource_group" "Apex1" {
+name = "rg-qa-02"
+location = "eastus"
+  
+}

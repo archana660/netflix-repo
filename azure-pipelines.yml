@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 trigger:
  branches:
    include:
@@ -22,3 +23,45 @@ stages:
               backendAzureRmStorageAccountName: 'apexkastorage'
               backendAzureRmContainerName: 'bluedrum'
               backendAzureRmKey: 'netfix-key-statefile'
+=======
+trigger:
+ branches:
+   include:
+     - main
+pool: netflix-agent-pool
+
+stages:
+  - stage: 
+    jobs:
+      - job: 
+        steps:
+          - task: TerraformInstaller@1
+            displayName: download the terraform
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTask@5
+            displayName: Init command  
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'netflix-svc'
+              backendAzureRmOverrideSubscriptionID: '5b5ee99c-c2f3-49c3-935b-4db8f82d71a5'
+              backendAzureRmResourceGroupName: 'rg-dev-01'
+              backendAzureRmStorageAccountName: 'apexkastorage'
+              backendAzureRmContainerName: 'bluedrum'
+              backendAzureRmKey: 'netfix-key-statefile'
+          - task: TerraformTask@5
+            displayName: Terraform plan command  
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: 'netflix-svc'
+              environmentAzureRmOverrideSubscriptionID: '5b5ee99c-c2f3-49c3-935b-4db8f82d71a5'
+          - task: TerraformTask@5
+            displayName: terraform apply
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              environmentServiceNameAzureRM: 'netflix-svc'
+              environmentAzureRmOverrideSubscriptionID: '5b5ee99c-c2f3-49c3-935b-4db8f82d71a5'
+>>>>>>> c65d246f4f86a8e534350823be8540e3932cd0cd
